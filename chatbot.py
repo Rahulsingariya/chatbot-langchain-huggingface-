@@ -14,14 +14,13 @@ if not HF_TOKEN:
 
 st.set_page_config(page_title="Q&A Chatbot", page_icon="🤖")
 st.title("🤖 Q&A Chatbot")
-st.markdown("Hello! 👋 I'm your chatbot powered by **Mistral-7B-Instruct**")
+st.markdown("Hello! 👋 I'm your chatbot. Ask me anything and I'll try to help you.")
 
 st.sidebar.success("✅ Model: mistralai/Mistral-7B-Instruct-v0.3")
 st.sidebar.write("API Token loaded:", HF_TOKEN is not None)
 
 MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
 
-# Corrected initialization
 client = InferenceClient(token=HF_TOKEN, model=MODEL)
 
 class HuggingFaceChatLLM(LLM, BaseModel):
@@ -53,7 +52,7 @@ for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
 
-if prompt_text := st.chat_input("Type your message here..."):
+if prompt_text := st.chat_input("Type your question here..."):
     st.session_state.messages.append({"role": "user", "content": prompt_text})
     with st.chat_message("user"):
         st.write(prompt_text)
