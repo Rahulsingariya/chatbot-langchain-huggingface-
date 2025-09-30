@@ -75,9 +75,3 @@ if prompt_text := st.chat_input("Type your question here..."):
             reply = chain.run(user_input=prompt_text)
             st.write(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
-
-# Optional: Reset chat button
-if st.button("🔄 Reset Chat"):
-    st.session_state.messages = []
-    memory.clear()
-    st.experimental_rerun()
