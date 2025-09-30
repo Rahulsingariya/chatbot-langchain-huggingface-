@@ -16,9 +16,6 @@ st.set_page_config(page_title="Q&A Chatbot", page_icon="🤖")
 st.title("🤖 Q&A Chatbot")
 st.markdown("Hello! 👋 I'm your chatbot. Ask me anything and I'll try to help you.")
 
-st.sidebar.success("✅ Model: mistralai/Mistral-7B-Instruct-v0.3")
-st.sidebar.write("API Token loaded:", HF_TOKEN is not None)
-
 MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
 
 client = InferenceClient(token=HF_TOKEN, model=MODEL)
