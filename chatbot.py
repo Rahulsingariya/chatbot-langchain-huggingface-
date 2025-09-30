@@ -21,12 +21,8 @@ st.sidebar.write("API Token loaded:", HF_TOKEN is not None)
 
 MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
 
-# Initialize Hugging Face client explicitly with hosted API
-client = InferenceClient(
-    token=HF_TOKEN,
-    model=MODEL,
-    endpoint="https://api-inference.huggingface.co"
-)
+# Corrected initialization
+client = InferenceClient(token=HF_TOKEN, model=MODEL)
 
 class HuggingFaceChatLLM(LLM, BaseModel):
     client: InferenceClient = Field(...)
