@@ -6,7 +6,7 @@ from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from pydantic import BaseModel, Field
 
-# Load API token from Streamlit secrets
+
 HF_TOKEN = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
 
 if not HF_TOKEN:
@@ -17,10 +17,10 @@ st.set_page_config(page_title="Q&A Chatbot", page_icon="🤖")
 st.title("🤖 Q&A Chatbot")
 st.markdown("Hello! 👋 I'm your chatbot. Ask me anything and I'll try to help you.")
 
-# Only Meta-LLaMA 3
+
 MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-# Base client
+
 client = InferenceClient(token=HF_TOKEN, model=MODEL)
 
 class HuggingFaceChatLLM(LLM, BaseModel):
@@ -41,7 +41,7 @@ class HuggingFaceChatLLM(LLM, BaseModel):
         except Exception as e:
             return "❌ Failed to respond"
 
-# Conversation memory
+
 memory = ConversationBufferMemory(memory_key="history", return_messages=True)
 
 llm = HuggingFaceChatLLM(client=client)
@@ -51,16 +51,16 @@ prompt_template = ChatPromptTemplate.from_messages([
 ])
 chain = LLMChain(llm=llm, prompt=prompt_template, memory=memory)
 
-# Initialize session state
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display previous messages
+
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
 
-# Chat input
+
 if prompt_text := st.chat_input("Type your question here..."):
     st.session_state.messages.append({"role": "user", "content": prompt_text})
     with st.chat_message("user"):
@@ -71,3 +71,4 @@ if prompt_text := st.chat_input("Type your question here..."):
             reply = chain.run(user_input=prompt_text)
             st.write(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
+
